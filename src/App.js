@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { YoutubeProvider } from "./context/YoutubeApiContext";
+import "./App.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import { MenuToggleProvider } from "./context/MenuToggleContext";
 
-function App() {
+export default function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex w-full h-full">
+      <YoutubeProvider>
+        <MenuToggleProvider>
+          <div className="w-full h-full overflow-hidden">
+            <QueryClientProvider client={queryClient}>
+              <Outlet />
+            </QueryClientProvider>
+          </div>
+        </MenuToggleProvider>
+      </YoutubeProvider>
     </div>
   );
 }
-
-export default App;
